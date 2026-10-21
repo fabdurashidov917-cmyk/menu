@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zarafshon Grand Restaurant | Toshkentdagi Eng Zo'r Milliy va Yevropa Taomlari Menyusi</title>
-  <meta name="description" content="Toshkentdagi eng hashamatli restoran - Zarafshon Grand Restaurant. 34 dan ortiq saralangan tansiq taomlar, o'zbekona to'y oshi, tandir go'sht, kaboblar, sho'rvalar va nozik desertlar. O'zbekiston narxlarida online buyurtma va stol band qilish.">
+  <title>Zarafshon Grand Restaurant | Toshkentdagi Eng Sara Taomlar Menyusi va Narxlari</title>
+  <meta name="description" content="Zarafshon Grand Restaurant — Toshkentdagi eng sara milliy va tansiq taomlar menyusi. 34 dan ortiq taom rasmlari, to'liq masalliqlari va O'zbekiston narxlarida taomnoma katalogi.">
   
   <!-- Open Graph / Telegram / WhatsApp / Facebook Preview -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Zarafshon Grand Restaurant — Toshkentdagi Eng Sara Taomlar Menyusi">
-  <meta property="og:description" content="34+ saralangan tansiq taomlar, o'zbekona to'y oshi, tandir go'sht, shashliklar va nozik desertlar. O'zbekiston narxlarida online buyurtma bering!">
+  <meta property="og:title" content="Zarafshon Grand Restaurant — Taomlar Menyusi va Narxlari">
+  <meta property="og:description" content="34+ saralangan tansiq taomlar, o'zbekona to'y oshi, tandir go'sht, shashliklar va nozik desertlar. O'zbekiston narxlarida to'liq menyu!">
   <meta property="og:image" content="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -18,6 +18,9 @@
 </head>
 <body>
 
+  <!-- ================= ANIMATED GLOWING EMBERS (CHO'G' HARAKATI) ================= -->
+  <canvas id="embersCanvas"></canvas>
+
   <!-- ================= HEADER & NAVBAR ================= -->
   <header class="header">
     <div class="container nav-container">
@@ -25,17 +28,16 @@
         <div class="logo-icon">👑</div>
         <div>
           <span class="brand-name">ZARAFSHON</span>
-          <span class="brand-tagline">Grand Restaurant</span>
+          <span class="brand-tagline">Grand Restaurant • Menyu</span>
         </div>
       </a>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="nav-link active">Bosh sahifa</a></li>
         <li><a href="#about" class="nav-link">Restoran haqida</a></li>
-        <li><a href="#menu" class="nav-link">Bizning Menyu</a></li>
-        <li><a href="#reservation" class="nav-link">Stol band qilish</a></li>
+        <li><a href="#menu" class="nav-link">Taomlar Menyusi (34)</a></li>
         <li><a href="#reviews" class="nav-link">Sharhlar</a></li>
-        <li><a href="#contact" class="nav-link">Aloqa</a></li>
+        <li><a href="#contact" class="nav-link">Aloqa & Manzil</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -43,17 +45,8 @@
           📞 +998 71 200-88-88
         </a>
 
-        <button class="btn-icon" id="cartToggleBtn" aria-label="Savat">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
-          <span class="cart-badge" id="cartBadge">0</span>
-        </button>
-
-        <a href="#reservation" class="btn-gold">
-          Stol band qilish
+        <a href="#menu" class="btn-gold" style="padding: 10px 20px; font-size: 13px;">
+          🍽️ Menyuni Ko'rish
         </a>
 
         <button class="mobile-toggle" id="mobileToggle" aria-label="Menyu">☰</button>
@@ -66,7 +59,7 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-badge">
-          ✨ Toshkentdagi Premium Restoran & Lounge
+          🔥 Cho'g'da va O'tin Tandirda Pishirilgan Tansiq Taomlar
         </div>
 
         <h1 class="hero-title">
@@ -74,34 +67,34 @@
         </h1>
 
         <p class="hero-description">
-          Har bir luqmada haqiqiy mehmondo'stlik va asriy o'zbek oshpazlik san'ati. Bizda faqat eng sifatli mahsulotlar, xushbo'y tog' giyohlari va o'tin tandirida tayyorlangan 34 dan ortiq tansiq taomlar sizni kutmoqda.
+          Har bir luqmada haqiqiy o'zbek oshpazlik san'ati. Bizda faqat eng sifatli yangi mahsulotlar, xushbo'y tog' giyohlari va o'tin cho'g'ida tayyorlangan 34 dan ortiq tansiq taomlar va ularning haqiqiy O'zbekiston narxlari bilan tanishing.
         </p>
 
         <div class="hero-actions">
           <a href="#menu" class="btn-gold" style="padding: 14px 32px; font-size: 16px;">
-            <span>🍽️</span> Menyuni ko'rish
+            <span>🍽️</span> Taomlar Menyusi va Narxlari
           </a>
-          <a href="#reservation" class="btn-secondary" style="padding: 14px 28px; font-size: 16px;">
-            <span>📅</span> Stol bron qilish
+          <a href="#about" class="btn-secondary" style="padding: 14px 28px; font-size: 16px;">
+            <span>ℹ️</span> Biz haqimizda
           </a>
         </div>
 
         <div class="hero-features">
           <div class="feature-stat-item">
+            <span class="stat-number">34+</span>
+            <span class="stat-label">Sara tansiq taomlar</span>
+          </div>
+          <div class="feature-stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Halol barra go'sht</span>
+          </div>
+          <div class="feature-stat-item">
             <span class="stat-number">15+</span>
             <span class="stat-label">Yillik oshpazlik tajribasi</span>
           </div>
           <div class="feature-stat-item">
-            <span class="stat-number">34+</span>
-            <span class="stat-label">Saralangan tansiq taomlar</span>
-          </div>
-          <div class="feature-stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Halol sertifikatlangan go'sht</span>
-          </div>
-          <div class="feature-stat-item">
             <span class="stat-number">4.9 ★</span>
-            <span class="stat-label">Mamnun mehmonlar bahosi</span>
+            <span class="stat-label">Mehmonlar bahosi</span>
           </div>
         </div>
       </div>
@@ -115,9 +108,12 @@
             <p>Lazer guruchidan barra qo'y go'shti, no'xat, mayiz, qazi va bedana tuxumi bilan bezatilgan shohona milliy taom.</p>
           </div>
           <div class="showcase-bottom">
-            <div class="showcase-price">48 000 so'm</div>
-            <button class="btn-gold" onclick="addToCart(1)" style="padding: 8px 18px; font-size: 13px;">
-              + Savatga qo'shish
+            <div>
+              <span style="font-size: 12px; color: var(--text-muted); display: block;">Narxi:</span>
+              <div class="showcase-price">48 000 so'm</div>
+            </div>
+            <button class="btn-gold" onclick="openDishModal(1)" style="padding: 9px 18px; font-size: 13px;">
+              🔍 Batafsil ko'rish
             </button>
           </div>
         </div>
@@ -137,34 +133,34 @@
   <section class="section" id="about" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Nega aynan Zarafshon?</span>
-        <h2 class="section-title">Biz Sizga Qanday Qulayliklar Ulashamiz?</h2>
-        <p class="section-subtitle">O'zbekistonning boy madaniyati va zamonaviy restoran servisining yuksak namunasini taqdim etamiz.</p>
+        <span class="section-tag">Bizning Oshxona Sirlari</span>
+        <h2 class="section-title">Nega Bizning Taomlar O'zgacha Ta'mga Ega?</h2>
+        <p class="section-subtitle">O'zbekistonning asriy pazandalik an'analari va cho'g'da pishirish san'ati.</p>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
         <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
           <div style="font-size: 36px; margin-bottom: 16px;">🥩</div>
           <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">100% Halol va Tabiiy Go'sht</h3>
-          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Har kuni ertalab yetkazib beriladigan faqat yangi so'yilgan barra qo'y va mol go'shti ishlatiladi. Muzlatgichda uzoq saqlangan mahsulotlar umuman qo'llanilmaydi.</p>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Har kuni ertalab yetkazib beriladigan faqat yangi barra qo'y va mol go'shti ishlatiladi. Muzlatgichda uzoq saqlangan mahsulotlar umuman qo'llanilmaydi.</p>
         </div>
 
         <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-          <div style="font-size: 36px; margin-bottom: 16px;">🪵</div>
-          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">O'tin Tandir va Cho'g' Mangal</h3>
-          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Tog' archasi tutuni va haqiqiy eman ko'mirida pishirilgan go'shtlar o'zgacha betakror xushbo'ylik va mayin ta'm kasb etadi.</p>
+          <div style="font-size: 36px; margin-bottom: 16px;">🔥</div>
+          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">Eman Cho'g'i va Loy Tandir</h3>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Tog' archasi tutuni va eman daraxti cho'g'ida pishirilgan go'shtlar betakror xushbo'ylik, qarsildoq yuza va mayin ichki sharbatga ega bo'ladi.</p>
         </div>
 
         <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-          <div style="font-size: 36px; margin-bottom: 16px;">🏛️</div>
-          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">VIP Xonalar va Sharqona Hashamat</h3>
-          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Oilaviy bayramlar, biznes uchrashuvlari va mehmondorchiliklar uchun akustik izolyatsiyalangan shinam VIP xonalar va keng terrasa mavjud.</p>
+          <div style="font-size: 36px; margin-bottom: 16px;">🌿</div>
+          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">Tabiiy Tog' Ziravorlari</h3>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Zarafshon va Zomin tog'laridan keltirilgan tog' zirasi, kashnich, yalpiz va binafsha rayhon taomlarimizga sehrli ifor bag'ishlaydi.</p>
         </div>
 
         <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-          <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
-          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">Tezkor Yetkazib Berish</h3>
-          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Toshkent shahrining istalgan nuqtasiga issiq va yangi holatida termobokslarda 35-45 daqiqa ichida yetkazib beramiz.</p>
+          <div style="font-size: 36px; margin-bottom: 16px;">💎</div>
+          <h3 style="font-family: var(--font-serif); font-size: 20px; margin-bottom: 10px;">Shaffof va Hamyonbop Narxlar</h3>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Barcha porsiyalar saxovatli, narxlar esa Toshkent bo'yicha to'liq shaffof va adolatli O'zbekiston so'mida ko'rsatilgan.</p>
         </div>
       </div>
     </div>
@@ -175,9 +171,9 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Restoran Taomnoma Katalogi</span>
-        <h2 class="section-title">Eng Sara 34 Ta Tansiq Taom Menyusi</h2>
+        <h2 class="section-title">Eng Sara 34 Ta Tansiq Taom Menyusi va Narxlari</h2>
         <p class="section-subtitle">
-          Milliy oshxonamizning faxrlari, xushbo'y kaboblar, qaynoq sho'rvalar, barra salatlar va sharqona shirinliklar.
+          Milliy oshxonamiz faxrlari, shirali kaboblar, qaynoq sho'rvalar, barra salatlar va sharqona shirinliklar.
         </p>
       </div>
 
@@ -192,7 +188,7 @@
           <div class="sort-box">
             <label for="sortSelect">Saralash:</label>
             <select id="sortSelect" class="sort-select">
-              <option value="popular">Eng ommabop (Mijozlar tanlovi)</option>
+              <option value="popular">Eng ommabop taomlar</option>
               <option value="price-asc">Narx: Arzondan Qimmatga</option>
               <option value="price-desc">Narx: Qimmatdan Arzonga</option>
               <option value="rating">Eng yuqori baholangan (★)</option>
@@ -242,130 +238,29 @@
       <div class="dishes-grid" id="dishesGrid">
         <!-- Rendered by app.js -->
       </div>
-
-      <!-- Special Promo Banner -->
-      <div class="promo-banner">
-        <div class="promo-content">
-          <span style="color: var(--gold); font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;">Maxsus Taklif</span>
-          <h3>Katta Dasturxon yoki To'y-Marosimlar Uchun Maxsus Narxlar</h3>
-          <p>10 kishidan ortiq mehmonlar uchun alohida VIP zal, maxsus tayyorlangan 5 xil taomli to'plam va 15% chegirma taqdim etiladi.</p>
-        </div>
-        <div>
-          <a href="#reservation" class="btn-gold" style="white-space: nowrap;">
-            Administrator bilan bog'lanish
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= RESERVATION SECTION ================= -->
-  <section class="section reservation-section" id="reservation">
-    <div class="container">
-      <div class="reservation-card">
-        <div class="reservation-info">
-          <span class="section-tag">Joyingizni Oldindan Band Qiling</span>
-          <h3>Zarafshon Restoranida Unutilmas Oqshom</h3>
-          <p>
-            O'zingiz va yaqinlaringiz uchun shinam stol yoki alohida VIP zalni hoziroq band qiling. Administratorimiz tez orada siz bilan bog'lanib, barcha tafsilotlarni tasdiqlaydi.
-          </p>
-
-          <ul class="perks-list">
-            <li>
-              <div class="perk-icon">✓</div>
-              <span>Oldindan band qilish bepul va tezkor amalga oshiriladi</span>
-            </li>
-            <li>
-              <div class="perk-icon">✓</div>
-              <span>Jonli sharqona musiqa (Har juma, shanba va yakshanba 19:00 dan)</span>
-            </li>
-            <li>
-              <div class="perk-icon">✓</div>
-              <span>Qulay avtoturargoh va bepul Wi-Fi xizmati</span>
-            </li>
-            <li>
-              <div class="perk-icon">✓</div>
-              <span>Bolalar uchun maxsus shinam o'yingoh</span>
-            </li>
-          </ul>
-        </div>
-
-        <form class="reservation-form" id="reservationForm">
-          <div class="form-group">
-            <label for="resName">Ism-sharifingiz *</label>
-            <input type="text" id="resName" class="form-input" placeholder="Masalan: Sardor Alimov" required />
-          </div>
-
-          <div class="form-group">
-            <label for="resPhone">Telefon raqamingiz *</label>
-            <input type="tel" id="resPhone" class="form-input" placeholder="+998 90 123 45 67" required />
-          </div>
-
-          <div class="form-group">
-            <label for="resDate">Tashrif sanasi *</label>
-            <input type="date" id="resDate" class="form-input" required />
-          </div>
-
-          <div class="form-group">
-            <label for="resTime">Tashrif vaqti *</label>
-            <input type="time" id="resTime" class="form-input" required />
-          </div>
-
-          <div class="form-group">
-            <label for="resGuests">Mehmonlar soni *</label>
-            <select id="resGuests" class="form-select" required>
-              <option value="1-2">1 - 2 kishi (Romantik kechki ovqat)</option>
-              <option value="3-5" selected>3 - 5 kishi (Oila davrasida)</option>
-              <option value="6-10">6 - 10 kishi (Do'stlar yig'ini)</option>
-              <option value="10+">10 kishidan ortiq (Banket / Marosim)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="resHall">Zal turi *</label>
-            <select id="resHall" class="form-select" required>
-              <option value="Umumiy Sharqona Zal">Umumiy Sharqona Zal</option>
-              <option value="VIP Xona (Xonadon uslubi)">VIP Xona (Alohida xona)</option>
-              <option value="Yozgi Ochiq Terassa">Yozgi Ochiq Terassa</option>
-              <option value="Lounge & Shisha Bar">Lounge & Shisha Bar</option>
-            </select>
-          </div>
-
-          <div class="form-group full-width">
-            <label for="resNotes">Qo'shimcha istaklaringiz (ixtiyoriy)</label>
-            <textarea id="resNotes" class="form-textarea" rows="2" placeholder="Masalan: Deraza yonidagi stol bo'lsin, tug'ilgan kun nishonlanadi..."></textarea>
-          </div>
-
-          <div class="form-group full-width">
-            <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
-              ✨ Stolni band qilishni tasdiqlash
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
   </section>
 
   <!-- ================= REVIEWS SECTION ================= -->
-  <section class="section" id="reviews">
+  <section class="section" id="reviews" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Mehmonlarimiz Fikrlari</span>
-        <h2 class="section-title">Haqiqiy Sharhlar va Taassurotlar</h2>
-        <p class="section-subtitle">Har kuni yuzlab mehmonlarimiz o'zbekona mehmondo'stlikdan bahramand bo'lmoqdalar.</p>
+        <h2 class="section-title">Haqiqiy Sharhlar va Baholar</h2>
+        <p class="section-subtitle">Har kuni yuzlab mehmonlarimiz o'zbekona tansiq taomlardan bahramand bo'lmoqdalar.</p>
       </div>
 
       <div class="reviews-grid">
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p class="review-text">
-            "Chustcha to'y oshi va tandir go'shti haqiqatdan ham fantastik darajada shirin chiqdi. Go'sht og'izda eriydi! Xodimlar juda muloyim, oila bilan borish uchun eng to'g'ri joy."
+            "Chustcha to'y oshi va tandir go'shti haqiqatdan ham ajoyib darajada shirin chiqdi. Go'sht og'izda eriydi! Narxlari ham porsiyasiga nisbatan juda munosib."
           </p>
           <div class="review-author">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Dilnoza" class="author-avatar" />
             <div class="author-info">
               <h4>Dilnoza Rahimova</h4>
-              <span>Toshkent shahri (Doimiy mijoz)</span>
+              <span>Toshkent shahri (Doimiy mehmon)</span>
             </div>
           </div>
         </div>
@@ -373,7 +268,7 @@
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p class="review-text">
-            "Chet ellik mehmonlarimizni olib bordik. Ularga ayniqsa G'ijduvon shashligi va ko'za sho'rvasi juda yoqdi. Interyeri sharqona hashamatda ishlangan, fotosuratlar uchun ham ajoyib."
+            "Chet ellik mehmonlarimizni olib bordik. Ularga ayniqsa G'ijduvon shashligi va ko'za sho'rvasi juda yoqdi. Cho'g'da pishgani darhol seziladi!"
           </p>
           <div class="review-author">
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Javohir" class="author-avatar" />
@@ -387,7 +282,7 @@
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p class="review-text">
-            "Uyga yetkazib berish xizmatidan foydalandik. 30 daqiqada taomlar xuddi qozondan yangi uzilgandek qaynoq holatda yetib keldi. Ayniqsa rayhonli choyi va pahlavasiga gap yo'q!"
+            "Menyudagi har bir taomning rasmi, masalliqlari va narxi aniq ko'rsatilgani juda qulay. Rayhonli xon choyi va issiq pahlavasi esa eng zo'r yakun bo'ldi."
           </p>
           <div class="review-author">
             <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Bekzod" class="author-avatar" />
@@ -414,7 +309,7 @@
             </div>
           </div>
           <p>
-            O'zbek xalqining boy pazandalik madaniyati va oliy darajadagi zamonaviy servis markazi. Sizni va oilangizni kutib qolamiz.
+            O'zbek xalqining boy pazandalik madaniyati va tansiq taomlari markazi. Har doim xizmatingizdamiz.
           </p>
           <div class="social-links">
             <a href="https://t.me" target="_blank" class="social-btn" title="Telegram">✈️</a>
@@ -429,7 +324,6 @@
             <li><a href="#home">Bosh sahifa</a></li>
             <li><a href="#about">Restoran haqida</a></li>
             <li><a href="#menu">Taomlar menyusi (34 xil)</a></li>
-            <li><a href="#reservation">Stol band qilish</a></li>
             <li><a href="#reviews">Mijozlar sharhlari</a></li>
           </ul>
         </div>
@@ -456,46 +350,10 @@
 
       <div class="footer-bottom">
         <p>&copy; 2026 Zarafshon Grand Restaurant. Barcha huquqlar himoyalangan.</p>
-        <p>Toshkent, O'zbekiston | Halol Milliy & Yevropa Taomlari</p>
+        <p>Toshkent, O'zbekiston | Halol Milliy Taomlar va Narxlar</p>
       </div>
     </div>
   </footer>
-
-  <!-- ================= CART DRAWER ================= -->
-  <div class="cart-drawer-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <div class="cart-title">
-        <span>🛍️</span>
-        <h3>Savatingiz</h3>
-      </div>
-      <button class="btn-close-cart" id="closeCartBtn" aria-label="Yopish">&times;</button>
-    </div>
-
-    <div class="cart-items-body" id="cartItems">
-      <!-- Items dynamically injected -->
-    </div>
-
-    <div class="cart-footer">
-      <div class="cart-summary-line">
-        <span>Taomlar jami:</span>
-        <span id="cartSubtotal">0 so'm</span>
-      </div>
-      <div class="cart-summary-line">
-        <span>Restoran xizmat haqi (10%):</span>
-        <span id="cartServiceCharge">0 so'm</span>
-      </div>
-      <div class="cart-summary-line total">
-        <span>Jami To'lov:</span>
-        <span class="total-amount" id="cartGrandTotal">0 so'm</span>
-      </div>
-
-      <button class="btn-gold btn-checkout" id="checkoutBtn">
-        <span>Buyurtmani Rasmiylashtirish</span>
-        <span>→</span>
-      </button>
-    </div>
-  </aside>
 
   <!-- ================= DISH DETAIL MODAL ================= -->
   <div class="modal-overlay" id="dishModalOverlay">
@@ -523,19 +381,19 @@
 
           <p class="modal-desc" id="modalDishDesc">Taom haqida to'liq tavsif.</p>
 
-          <div class="modal-ingredients-title">Asosiy masalliqlar:</div>
+          <div class="modal-ingredients-title">Asosiy masalliqlar va ziravorlar:</div>
           <div class="modal-ingredients-list" id="modalIngredientsList">
             <!-- Badges -->
           </div>
 
           <div class="modal-footer">
             <div>
-              <div style="font-size: 12px; color: var(--text-muted);">Narxi (O'zbekiston narxida):</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Rasmiy narxi (O'zbekiston narxida):</div>
               <div class="modal-price" id="modalDishPrice">0 so'm</div>
             </div>
 
-            <button class="btn-gold" id="modalAddToCartBtn" style="padding: 12px 24px;">
-              <span>+ Savatga qo'shish</span>
+            <button class="btn-gold" onclick="closeDishModalWindow()" style="padding: 12px 28px;">
+              <span>Tushunarli & Yopish</span>
             </button>
           </div>
         </div>

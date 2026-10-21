@@ -1,14 +1,12 @@
 // ========================================================
-// ZARAFSHON GRAND RESTAURANT - INTERACTIVE APP LOGIC
+// ZARAFSHON GRAND RESTAURANT - MENYU VA CHO'G' ANIMATSIYASI
 // ========================================================
 
 // App State
 const state = {
   activeCategory: 'all',
   searchQuery: '',
-  sortBy: 'popular',
-  cart: JSON.parse(localStorage.getItem('zarafshon_cart') || '[]'),
-  serviceChargeRate: 0.10 // 10% xizmat haqi
+  sortBy: 'popular'
 };
 
 // Currency Formatter
@@ -22,18 +20,6 @@ const searchInput = document.getElementById('searchInput');
 const sortSelect = document.getElementById('sortSelect');
 const categoryTabs = document.querySelectorAll('.tab-btn');
 const resultsCountEl = document.getElementById('resultsCount');
-
-// Cart Elements
-const cartToggleBtn = document.getElementById('cartToggleBtn');
-const cartDrawer = document.getElementById('cartDrawer');
-const cartOverlay = document.getElementById('cartOverlay');
-const closeCartBtn = document.getElementById('closeCartBtn');
-const cartBadge = document.getElementById('cartBadge');
-const cartItemsContainer = document.getElementById('cartItems');
-const subtotalEl = document.getElementById('cartSubtotal');
-const serviceChargeEl = document.getElementById('cartServiceCharge');
-const grandTotalEl = document.getElementById('cartGrandTotal');
-const checkoutBtn = document.getElementById('checkoutBtn');
 
 // Dish Modal Elements
 const dishModalOverlay = document.getElementById('dishModalOverlay');
@@ -49,19 +35,18 @@ const modalDishCalories = document.getElementById('modalDishCalories');
 const modalDishDesc = document.getElementById('modalDishDesc');
 const modalIngredientsList = document.getElementById('modalIngredientsList');
 const modalDishPrice = document.getElementById('modalDishPrice');
-const modalAddToCartBtn = document.getElementById('modalAddToCartBtn');
 
 let currentModalDishId = null;
 
-// Initialize
+// Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   renderCategoryCounts();
   renderMenu();
-  updateCartUI();
   setupEventListeners();
+  initGlowingEmbersAnimation();
 });
 
-// Calculate category counts
+// Category counts calculation
 function renderCategoryCounts() {
   const counts = {
     all: MENU_ITEMS.length,
@@ -109,14 +94,14 @@ function getFilteredAndSortedItems() {
   } else if (state.sortBy === 'rating') {
     items.sort((a, b) => b.rating - a.rating);
   } else {
-    // popular (default) - by reviews count
+    // popular (default)
     items.sort((a, b) => b.reviewsCount - a.reviewsCount);
   }
 
   return items;
 }
 
-// Render Menu to DOM
+// Render Menu to DOM (Only menus and prices)
 function renderMenu() {
   const items = getFilteredAndSortedItems();
 
@@ -128,9 +113,9 @@ function renderMenu() {
     dishesContainer.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🍽️</div>
-        <h3>Hech qanday taom topilmadi</h3>
+        <h3>Bunday taom topilmadi</h3>
         <p style="color: var(--text-secondary); margin-top: 8px;">
-          "${state.searchQuery}" bo'yicha taom topilmadi. Qidiruv so'zini o'zgartirib ko'ring yoki boshqa toifani tanlang.
+          "${state.searchQuery}" bo'yicha taom topilmadi. Qidiruv so'zini tekshiring yoki barcha toifani tanlang.
         </p>
       </div>
     `;
@@ -180,17 +165,15 @@ function renderMenu() {
 
           <div class="dish-footer">
             <div class="dish-price-wrap">
+              <span class="price-label">Narxi:</span>
               ${oldPriceHtml}
               <div class="dish-price">${formatPrice(dish.price)}</div>
             </div>
 
             <div class="dish-buttons">
-              <button class="btn-detail" onclick="openDishModal(${dish.id})">Batafsil</button>
-              <button class="btn-add-cart" onclick="addToCart(${dish.id})">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M12 5v14M5 12h14"/>
-                </svg>
-                Qo'shish
+              <button class="btn-detail-full" onclick="openDishModal(${dish.id})">
+                <span>Batafsil ma'lumot</span>
+                <span>→</span>
               </button>
             </div>
           </div>
@@ -210,10 +193,10 @@ window.openDishModal = function(id) {
   modalDishImg.alt = dish.title;
   modalDishCat.textContent = dish.categoryName;
   modalDishTitle.textContent = dish.title;
-  modalDishRating.textContent = `★ ${dish.rating} (${dish.reviewsCount} sharh)`;
-  modalDishPortion.textContent = dish.portion;
-  modalDishTime.textContent = dish.time;
-  modalDishCalories.textContent = dish.calories;
+  modalDishRating.textContent = `★ ${dish.rating} (${dish.reviewsCount} baho)`;
+  modalDishPortion.textContent = `Porsiya: ${dish.portion}`;
+  modalDishTime.textContent = `⏱️ ${dish.time}`;
+  modalDishCalories.textContent = `🔥 ${dish.calories}`;
   modalDishDesc.textContent = dish.desc;
   modalDishPrice.textContent = formatPrice(dish.price);
 
@@ -232,140 +215,10 @@ window.openDishModal = function(id) {
   dishModalOverlay.classList.add('open');
 };
 
-function closeDishModalWindow() {
+window.closeDishModalWindow = function() {
   dishModalOverlay.classList.remove('open');
   currentModalDishId = null;
-}
-
-// Cart Functions
-window.addToCart = function(id) {
-  const dish = MENU_ITEMS.find(item => item.id === id);
-  if (!dish) return;
-
-  const existingItem = state.cart.find(item => item.id === id);
-  if (existingItem) {
-    existingItem.qty += 1;
-  } else {
-    state.cart.push({
-      id: dish.id,
-      title: dish.title,
-      price: dish.price,
-      image: dish.image,
-      qty: 1
-    });
-  }
-
-  saveCart();
-  updateCartUI();
-  showToast(`"${dish.title}" savatga qo'shildi! 🛒`);
-  bumpCartIcon();
 };
-
-window.changeCartQty = function(id, delta) {
-  const item = state.cart.find(i => i.id === id);
-  if (!item) return;
-
-  item.qty += delta;
-  if (item.qty <= 0) {
-    state.cart = state.cart.filter(i => i.id !== id);
-  }
-
-  saveCart();
-  updateCartUI();
-};
-
-window.removeFromCart = function(id) {
-  state.cart = state.cart.filter(i => i.id !== id);
-  saveCart();
-  updateCartUI();
-  showToast("Taom savatdan olib tashlandi");
-};
-
-function saveCart() {
-  localStorage.setItem('zarafshon_cart', JSON.stringify(state.cart));
-}
-
-function bumpCartIcon() {
-  if (cartBadge) {
-    cartBadge.classList.add('bump');
-    setTimeout(() => cartBadge.classList.remove('bump'), 300);
-  }
-}
-
-function updateCartUI() {
-  const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
-  if (cartBadge) {
-    cartBadge.textContent = totalItems;
-  }
-
-  if (state.cart.length === 0) {
-    cartItemsContainer.innerHTML = `
-      <div class="empty-cart-msg">
-        <div style="font-size: 40px; margin-bottom: 12px;">🛍️</div>
-        <p>Savatingiz hozircha bo'sh</p>
-        <p style="font-size: 13px; margin-top: 6px;">Menyudan o'zingiz yoqtirgan tansiq taomlarni qo'shing!</p>
-      </div>
-    `;
-    subtotalEl.textContent = "0 so'm";
-    serviceChargeEl.textContent = "0 so'm";
-    grandTotalEl.textContent = "0 so'm";
-    checkoutBtn.disabled = true;
-    checkoutBtn.style.opacity = '0.5';
-    checkoutBtn.style.cursor = 'not-allowed';
-    return;
-  }
-
-  checkoutBtn.disabled = false;
-  checkoutBtn.style.opacity = '1';
-  checkoutBtn.style.cursor = 'pointer';
-
-  cartItemsContainer.innerHTML = state.cart.map(item => `
-    <div class="cart-item-card">
-      <img src="${item.image}" alt="${item.title}" class="cart-item-img" />
-      <div class="cart-item-info">
-        <h4 class="cart-item-title">${item.title}</h4>
-        <div class="cart-item-price">${formatPrice(item.price)}</div>
-        <div class="cart-item-counter">
-          <button class="count-btn" onclick="changeCartQty(${item.id}, -1)">-</button>
-          <span class="cart-item-qty">${item.qty}</span>
-          <button class="count-btn" onclick="changeCartQty(${item.id}, 1)">+</button>
-        </div>
-      </div>
-      <button class="btn-delete-item" onclick="removeFromCart(${item.id})" title="O'chirish">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-        </svg>
-      </button>
-    </div>
-  `).join('');
-
-  const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const serviceCharge = Math.round(subtotal * state.serviceChargeRate);
-  const grandTotal = subtotal + serviceCharge;
-
-  subtotalEl.textContent = formatPrice(subtotal);
-  serviceChargeEl.textContent = formatPrice(serviceCharge);
-  grandTotalEl.textContent = formatPrice(grandTotal);
-}
-
-// Toast Notification
-function showToast(message) {
-  let toastContainer = document.querySelector('.toast-container');
-  if (!toastContainer) {
-    toastContainer = document.createElement('div');
-    toastContainer.className = 'toast-container';
-    document.body.appendChild(toastContainer);
-  }
-
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `<span>✨</span><span>${message}</span>`;
-  toastContainer.appendChild(toast);
-
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -395,28 +248,6 @@ function setupEventListeners() {
     });
   }
 
-  // Cart Drawer open/close
-  if (cartToggleBtn) {
-    cartToggleBtn.addEventListener('click', () => {
-      cartDrawer.classList.add('open');
-      cartOverlay.classList.add('open');
-    });
-  }
-
-  if (closeCartBtn) {
-    closeCartBtn.addEventListener('click', () => {
-      cartDrawer.classList.remove('open');
-      cartOverlay.classList.remove('open');
-    });
-  }
-
-  if (cartOverlay) {
-    cartOverlay.addEventListener('click', () => {
-      cartDrawer.classList.remove('open');
-      cartOverlay.classList.remove('open');
-    });
-  }
-
   // Dish Modal Close
   if (closeDishModal) {
     closeDishModal.addEventListener('click', closeDishModalWindow);
@@ -430,44 +261,22 @@ function setupEventListeners() {
     });
   }
 
-  if (modalAddToCartBtn) {
-    modalAddToCartBtn.addEventListener('click', () => {
-      if (currentModalDishId) {
-        addToCart(currentModalDishId);
-        closeDishModalWindow();
-      }
-    });
-  }
-
-  // Checkout process (Order via Modal / Telegram Summary)
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', handleCheckout);
-  }
-
-  // Table reservation form
-  const reserveForm = document.getElementById('reservationForm');
-  if (reserveForm) {
-    reserveForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('resName').value;
-      const phone = document.getElementById('resPhone').value;
-      const date = document.getElementById('resDate').value;
-      const time = document.getElementById('resTime').value;
-      const guests = document.getElementById('resGuests').value;
-      const hall = document.getElementById('resHall').value;
-
-      alert(`🎉 Rahmat, ${name}! Stolingiz muvaffaqiyatli band qilindi.\n\n📅 Sana: ${date}\n⏰ Vaqt: ${time}\n👥 Mehmonlar: ${guests} kishi\n🏛️ Zal: ${hall}\n\nAdministratorimiz ${phone} raqamingizga qo'ng'iroq qilib tasdiqlaydi.`);
-      reserveForm.reset();
-    });
-  }
+  // Esc key to close modal
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDishModalWindow();
+    }
+  });
 
   // Navbar scroll background
   window.addEventListener('scroll', () => {
     const header = document.querySelector('.header');
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+    if (header) {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     }
   });
 
@@ -494,38 +303,142 @@ function setupEventListeners() {
   }
 }
 
-// Handle Order Checkout
-function handleCheckout() {
-  if (state.cart.length === 0) return;
+// ========================================================
+// REALISTIC GLOWING EMBERS (CHO'G' HARAKATI: CHAPDAN O'NGGA)
+// ========================================================
+function initGlowingEmbersAnimation() {
+  const canvas = document.getElementById('embersCanvas');
+  if (!canvas) return;
 
-  const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const serviceCharge = Math.round(subtotal * state.serviceChargeRate);
-  const grandTotal = subtotal + serviceCharge;
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
 
-  let orderSummary = "🍽️ ZARAFSHON RESTORANIGA YANGI BUYURTMA:\n\n";
-  state.cart.forEach((item, index) => {
-    orderSummary += `${index + 1}. ${item.title} x ${item.qty} dona = ${formatPrice(item.price * item.qty)}\n`;
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
   });
 
-  orderSummary += `\nTaomlar narxi: ${formatPrice(subtotal)}`;
-  orderSummary += `\nXizmat haqi (10%): ${formatPrice(serviceCharge)}`;
-  orderSummary += `\nJAMI TO'LOV: ${formatPrice(grandTotal)}`;
+  // Ember particles count
+  const emberCount = Math.min(Math.floor(width / 22), 75);
+  const embers = [];
 
-  const customerName = prompt("Buyurtmani rasmiylashtirish uchun ismingizni kiriting:", "");
-  if (!customerName) return;
+  // Color palettes of hot burning coal / embers
+  const emberColors = [
+    { r: 255, g: 75, b: 20 },   // Deep fiery orange-red
+    { r: 255, g: 140, b: 0 },   // Hot amber
+    { r: 255, g: 195, b: 35 },  // Radiant gold
+    { r: 255, g: 235, b: 120 }, // Intense white-yellow spark
+    { r: 230, g: 45, b: 15 }    // Rich ruby ember
+  ];
 
-  const customerPhone = prompt("Bog'lanish uchun telefon raqamingiz (+998...):", "+998 ");
-  if (!customerPhone) return;
+  class Ember {
+    constructor(initialRandomX = false) {
+      this.reset(initialRandomX);
+    }
 
-  const finalSummary = `${orderSummary}\n\n👤 Mijoz: ${customerName}\n📞 Tel: ${customerPhone}\n\nBuyurtmangiz qabul qilindi! Operatorimiz 5 daqiqada siz bilan bog'lanadi.`;
+    reset(initialRandomX = false) {
+      // Moves strictly from left to right
+      this.x = initialRandomX ? Math.random() * width : -20 - Math.random() * 60;
+      this.y = Math.random() * height;
+      
+      // Speed from left to right (horizontal velocity)
+      this.speedX = 0.8 + Math.random() * 1.8;
+      
+      // Subtle vertical floating wave
+      this.speedY = (Math.random() - 0.5) * 0.5;
+      this.angle = Math.random() * Math.PI * 2;
+      this.angleSpeed = 0.015 + Math.random() * 0.025;
+      this.waveAmplitude = 0.4 + Math.random() * 0.8;
 
-  alert(finalSummary);
+      // Size and glow
+      this.radius = 1.2 + Math.random() * 2.6;
+      this.baseAlpha = 0.4 + Math.random() * 0.55;
+      this.alpha = this.baseAlpha;
+      this.pulseSpeed = 0.02 + Math.random() * 0.04;
+      this.pulseAngle = Math.random() * Math.PI * 2;
 
-  // Clear cart
-  state.cart = [];
-  saveCart();
-  updateCartUI();
-  cartDrawer.classList.remove('open');
-  cartOverlay.classList.remove('open');
-  showToast("Buyurtmangiz qabul qilindi! Yoqimli ishtaha! 🎉");
+      // Color selection
+      this.color = emberColors[Math.floor(Math.random() * emberColors.length)];
+    }
+
+    update() {
+      // Horizontal motion: chapdan o'ngga
+      this.x += this.speedX;
+      
+      // Gentle wavy vertical movement like realistic hot air currents
+      this.angle += this.angleSpeed;
+      this.y += Math.sin(this.angle) * this.waveAmplitude + this.speedY;
+
+      // Pulsing glow effect (o'chib-yonish)
+      this.pulseAngle += this.pulseSpeed;
+      this.alpha = this.baseAlpha + Math.sin(this.pulseAngle) * 0.25;
+      if (this.alpha < 0.15) this.alpha = 0.15;
+      if (this.alpha > 0.95) this.alpha = 0.95;
+
+      // If particle travels past the right screen border, spawn back on the left
+      if (this.x > width + 30) {
+        this.reset(false);
+      }
+
+      // If it leaves top/bottom boundary, gently wrap around
+      if (this.y < -20) this.y = height + 10;
+      if (this.y > height + 20) this.y = -10;
+    }
+
+    draw() {
+      ctx.save();
+      
+      // Glowing halo (radial glow around the burning ember)
+      const glowRadius = this.radius * 3.8;
+      const gradient = ctx.createRadialGradient(
+        this.x, this.y, 0,
+        this.x, this.y, glowRadius
+      );
+      
+      const { r, g, b } = this.color;
+      gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${this.alpha})`);
+      gradient.addColorStop(0.35, `rgba(${r}, ${g}, ${b}, ${this.alpha * 0.6})`);
+      gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Hot bright solid core of the ember
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(this.alpha * 1.2, 1)})`;
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  // Populate initial embers across the screen
+  for (let i = 0; i < emberCount; i++) {
+    embers.push(new Ember(true));
+  }
+
+  // Animation loop
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    // Warm ambient hearth glow on the left edge
+    const leftHearthGradient = ctx.createLinearGradient(0, 0, width * 0.35, 0);
+    leftHearthGradient.addColorStop(0, 'rgba(255, 60, 0, 0.045)');
+    leftHearthGradient.addColorStop(1, 'rgba(255, 60, 0, 0)');
+    ctx.fillStyle = leftHearthGradient;
+    ctx.fillRect(0, 0, width * 0.35, height);
+
+    for (let i = 0; i < embers.length; i++) {
+      embers[i].update();
+      embers[i].draw();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 }
